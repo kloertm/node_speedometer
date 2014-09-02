@@ -33,12 +33,7 @@ function drawLine(options, line)
 function createLine(fromX, fromY, toX, toY, fillStyle, lineWidth, alpha)
 {
     // Create a line object using Javascript object notation
-    return {
-      from:{
-      X: fromX, Y:fromY}
-      , to:{
-      X: toX, Y:toY}
-  , fillStyle: fillStyle, lineWidth: lineWidth, alpha:alpha};
+    return {from: {X: fromX, Y:fromY}, to: {X: toX, Y:toY}, fillStyle: fillStyle, lineWidth: lineWidth, alpha:alpha};
 }
 
 function drawOuterMetallicArc(options)
@@ -52,8 +47,7 @@ function drawOuterMetallicArc(options)
     options.ctx.fillStyle = "rgb(127,127,127)";
 
     // Draw the outer circle
-    options.ctx.arc(options.center.X,
-		    options.center.Y, options.radius, 0, Math.PI, true);
+    options.ctx.arc(options.center.X, options.center.Y, options.radius, 0, Math.PI, true);
 
     // Fill the last object
     options.ctx.fill();
@@ -71,9 +65,7 @@ function drawInnerMetallicArc(options)
     options.ctx.fillStyle = "rgb(255,255,255)";
 
     // Outer circle (subtle edge in the grey)
-    options.ctx.arc(options.center.X,
-		    options.center.Y,
-		    (options.radius / 100) * 90, 0, Math.PI, true);
+    options.ctx.arc(options.center.X, options.center.Y, (options.radius / 100) * 90, 0, Math.PI, true);
 
     options.ctx.fill();
 }
@@ -104,8 +96,7 @@ function drawBackground(options)
     for (i = 170; i < 180; i++) {
 	options.ctx.beginPath();
 
-	options.ctx.arc(options.center.X,
-			options.center.Y, i, 0, Math.PI, true);
+	options.ctx.arc(options.center.X, options.center.Y, i, 0, Math.PI, true);
 
 	options.ctx.fill();
     }
@@ -153,12 +144,8 @@ function drawSmallTickMarks(options)
 
 	onArchX = gaugeOptions.radius - (Math.cos(iTickRad) * tickvalue);
 	onArchY = gaugeOptions.radius - (Math.sin(iTickRad) * tickvalue);
-	innerTickX =
-	    gaugeOptions.radius -
-	    (Math.cos(iTickRad) * gaugeOptions.radius);
-	innerTickY =
-	    gaugeOptions.radius -
-	    (Math.sin(iTickRad) * gaugeOptions.radius);
+	innerTickX = gaugeOptions.radius - (Math.cos(iTickRad) * gaugeOptions.radius);
+	innerTickY = gaugeOptions.radius - (Math.sin(iTickRad) * gaugeOptions.radius);
 
 	fromX = (options.center.X - gaugeOptions.radius) + onArchX;
 	fromY = (gaugeOptions.center.Y - gaugeOptions.radius) + onArchY;
@@ -166,12 +153,10 @@ function drawSmallTickMarks(options)
 	toY = (gaugeOptions.center.Y - gaugeOptions.radius) + innerTickY;
 
 	// Create a line expressed in JSON
-	line =
-	    createLine(fromX, fromY, toX, toY, "rgb(127,127,127)", 3, 0.6);
+	line = createLine(fromX, fromY, toX, toY, "rgb(127,127,127)", 3, 0.6);
 
 	// Draw the line
 	drawLine(options, line);
-
     }
 }
 
@@ -207,12 +192,8 @@ function drawLargeTickMarks(options)
 
 	onArchX = gaugeOptions.radius - (Math.cos(iTickRad) * tickvalue);
 	onArchY = gaugeOptions.radius - (Math.sin(iTickRad) * tickvalue);
-	innerTickX =
-	    gaugeOptions.radius -
-	    (Math.cos(iTickRad) * gaugeOptions.radius);
-	innerTickY =
-	    gaugeOptions.radius -
-	    (Math.sin(iTickRad) * gaugeOptions.radius);
+	innerTickX = gaugeOptions.radius - (Math.cos(iTickRad) * gaugeOptions.radius);
+	innerTickY = gaugeOptions.radius - (Math.sin(iTickRad) * gaugeOptions.radius);
 
 	fromX = (options.center.X - gaugeOptions.radius) + onArchX;
 	fromY = (gaugeOptions.center.Y - gaugeOptions.radius) + onArchY;
@@ -220,8 +201,7 @@ function drawLargeTickMarks(options)
 	toY = (gaugeOptions.center.Y - gaugeOptions.radius) + innerTickY;
 
 	// Create a line expressed in JSON
-	line =
-	    createLine(fromX, fromY, toX, toY, "rgb(127,127,127)", 3, 0.6);
+	line = createLine(fromX, fromY, toX, toY, "rgb(127,127,127)", 3, 0.6);
 
 	// Draw the line
 	drawLine(options, line);
@@ -246,7 +226,7 @@ function drawTextMarkers(options)
      */
     var innerTickX = 0,
 	innerTickY = 0,
-	iTick = 0, gaugeOptions = options.gaugeOptions, iTickToPrint = 80;
+	iTick = 0, gaugeOptions = options.gaugeOptions, iTickToPrint = 0;
 
     applyDefaultContextSettings(options);
 
@@ -259,12 +239,8 @@ function drawTextMarkers(options)
     // Tick every 20 (small ticks)
     for (iTick = 10; iTick < 180; iTick += 20) {
 
-	innerTickX =
-	    gaugeOptions.radius -
-	    (Math.cos(degToRad(iTick)) * gaugeOptions.radius);
-	innerTickY =
-	    gaugeOptions.radius -
-	    (Math.sin(degToRad(iTick)) * gaugeOptions.radius);
+	innerTickX = gaugeOptions.radius - (Math.cos(degToRad(iTick)) * gaugeOptions.radius);
+	innerTickY = gaugeOptions.radius - (Math.sin(degToRad(iTick)) * gaugeOptions.radius);
 
 	// Some cludging to center the values (TODO: Improve)
 	if (iTick <= 10) {
@@ -279,15 +255,14 @@ function drawTextMarkers(options)
 				 (options.center.X - gaugeOptions.radius -
 				  12) + innerTickX - 5,
 				 (gaugeOptions.center.Y -
-				  gaugeOptions.radius - 12) + innerTickY +
-				 5);
+				  gaugeOptions.radius - 12) + innerTickY + 5);
 	} else if (iTick < 90) {
 	    options.ctx.fillText(iTickToPrint,
 				 (options.center.X - gaugeOptions.radius -
 				  12) + innerTickX,
 				 (gaugeOptions.center.Y -
 				  gaugeOptions.radius - 12) + innerTickY);
-	} else if (iTick == = 90) {
+	} else if (iTick == 90) {
 	    options.ctx.fillText(iTickToPrint,
 				 (options.center.X - gaugeOptions.radius -
 				  12) + innerTickX + 4,
@@ -309,7 +284,7 @@ function drawTextMarkers(options)
 	}
 
 	// MPH increase by 10 every 20 degrees
-	iTickToPrint += Math.round(2160 / 9);
+	iTickToPrint += 10;
     }
 
     options.ctx.stroke();
@@ -368,8 +343,7 @@ function drawNeedleDial(options, alphaValue, strokeStyle, fillStyle)
     for (i = 0; i < 30; i++) {
 
 	options.ctx.beginPath();
-	options.ctx.arc(options.center.X,
-			options.center.Y, i, 0, Math.PI, true);
+	options.ctx.arc(options.center.X, options.center.Y, i, 0, Math.PI, true);
 
 	options.ctx.fill();
 	options.ctx.stroke();
@@ -403,20 +377,15 @@ function drawNeedle(options)
     var iSpeedAsAngle = convertSpeedToAngle(options),
 	iSpeedAsAngleRad = degToRad(iSpeedAsAngle),
 	gaugeOptions = options.gaugeOptions,
-	innerTickX =
-	gaugeOptions.radius - (Math.cos(iSpeedAsAngleRad) * 20),
-	innerTickY =
-	gaugeOptions.radius - (Math.sin(iSpeedAsAngleRad) * 20), fromX =
-	(options.center.X - gaugeOptions.radius) + innerTickX, fromY =
-	(gaugeOptions.center.Y - gaugeOptions.radius) + innerTickY,
-	endNeedleX =
-	gaugeOptions.radius -
-	(Math.cos(iSpeedAsAngleRad) * gaugeOptions.radius), endNeedleY =
-	gaugeOptions.radius -
-	(Math.sin(iSpeedAsAngleRad) * gaugeOptions.radius), toX =
-	(options.center.X - gaugeOptions.radius) + endNeedleX, toY =
-	(gaugeOptions.center.Y - gaugeOptions.radius) + endNeedleY, line =
-	createLine(fromX, fromY, toX, toY, "rgb(255,0,0)", 5, 0.6);
+	innerTickX = gaugeOptions.radius - (Math.cos(iSpeedAsAngleRad) * 20),
+	innerTickY = gaugeOptions.radius - (Math.sin(iSpeedAsAngleRad) * 20),
+	fromX = (options.center.X - gaugeOptions.radius) + innerTickX,
+	fromY = (gaugeOptions.center.Y - gaugeOptions.radius) + innerTickY,
+	endNeedleX = gaugeOptions.radius - (Math.cos(iSpeedAsAngleRad) * gaugeOptions.radius),
+	endNeedleY = gaugeOptions.radius - (Math.sin(iSpeedAsAngleRad) * gaugeOptions.radius),
+	toX = (options.center.X - gaugeOptions.radius) + endNeedleX,
+	toY = (gaugeOptions.center.Y - gaugeOptions.radius) + endNeedleY,
+	line = createLine(fromX, fromY, toX, toY, "rgb(255,0,0)", 5, 0.6);
 
     drawLine(options, line);
 
@@ -435,14 +404,12 @@ function buildOptionsAsJSON(canvas, iSpeed)
     var centerX = 210, centerY = 210, radius = 140, outerRadius = 200;
 
     // Create a speedometer object using Javascript object notation
-    return {
-      ctx: canvas.getContext('2d'), speed: iSpeed, center:{
-      X: centerX, Y:centerY}
-      , levelRadius: radius - 10, gaugeOptions:{
-	  center:{
-	  X: centerX, Y:centerY}
-      , radius:radius}
-  , radius:outerRadius};
+    return {ctx: canvas.getContext('2d'),
+      speed: iSpeed,
+      center:{X: centerX, Y:centerY},
+      levelRadius: radius - 10,
+      gaugeOptions:{center:{X: centerX, Y:centerY}, radius:radius},
+      radius:outerRadius};
 }
 
 function clearCanvas(options)

@@ -1,4 +1,4 @@
-var iCurrentSpeed = 20, iTargetSpeed = 20, bDecrement = null, job = null;
+var width, height;
 
 function degToRad(angle)
 {
@@ -401,7 +401,7 @@ function buildOptionsAsJSON(canvas, iSpeed)
      * Alter these to modify its look and feel
      */
 
-    var centerX = 210, centerY = 210, radius = 140, outerRadius = 200;
+    var centerX = width / 2, centerY = height / 2, radius = width / 2 - 100, outerRadius = width / 2 - 50;
 
     // Create a speedometer object using Javascript object notation
     return {ctx: canvas.getContext('2d'),
@@ -414,25 +414,25 @@ function buildOptionsAsJSON(canvas, iSpeed)
 
 function clearCanvas(options)
 {
-    options.ctx.clearRect(0, 0, 800, 600);
+    options.ctx.clearRect(0, 0, width, height);
     applyDefaultContextSettings(options);
 }
 
 module.exports = {
 
-  draw:function(canvas) {
+  draw:function(canvas, w, h, speed) {
 	/* Main entry point for drawing the speedometer
 	 * If canvas is not support alert the user.
 	 */
 
-	console.log('Target: ' + iTargetSpeed);
-	console.log('Current: ' + iCurrentSpeed);
+	width = w;
+	height = h;
 
 	var options = null;
 
 	// Canvas good?
 	if (canvas !== null && canvas.getContext) {
-	    options = buildOptionsAsJSON(canvas, iCurrentSpeed);
+	    options = buildOptionsAsJSON(canvas, speed);
 
 	    // Clear canvas
 	    clearCanvas(options);
@@ -458,30 +458,6 @@ module.exports = {
 	} else {
 	    alert("Canvas not supported by your browser!");
 	}
-
-	if (iTargetSpeed == iCurrentSpeed) {
-	    clearTimeout(job);
-	    return;
-	} else if (iTargetSpeed < iCurrentSpeed) {
-	    bDecrement = true;
-	} else if (iTargetSpeed > iCurrentSpeed) {
-	    bDecrement = false;
-	}
-
-	if (bDecrement) {
-	    if (iCurrentSpeed - 10 < iTargetSpeed)
-		iCurrentSpeed = iCurrentSpeed - 1;
-	    else
-		iCurrentSpeed = iCurrentSpeed - 5;
-	} else {
-
-	    if (iCurrentSpeed + 10 > iTargetSpeed)
-		iCurrentSpeed = iCurrentSpeed + 1;
-	    else
-		iCurrentSpeed = iCurrentSpeed + 5;
-	}
-
-	// job = setTimeout("draw()", 5);
     }
 
 };
